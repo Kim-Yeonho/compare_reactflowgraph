@@ -1,0 +1,498 @@
+:root {
+  --bg: #f1f5f9;
+  --panel: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #2563eb;
+  font-family: "Segoe UI", "Malgun Gothic", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── Top bar ─────────────────────────────────────────────── */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 20px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 24px;
+  color: var(--accent);
+}
+
+.brand h1 {
+  font-size: 17px;
+  margin: 0;
+}
+
+.brand small {
+  color: var(--muted);
+}
+
+.mode-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mode-toggle button {
+  border: none;
+  background: transparent;
+  padding: 8px 18px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.mode-toggle button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.input-toggle {
+  margin-left: auto;
+}
+
+button.ghost {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+button.primary {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 9px 22px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── JSON inputs ─────────────────────────────────────────── */
+.json-inputs {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+}
+
+.ji-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ji-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.ji-col label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--muted);
+}
+
+.ji-col textarea {
+  height: 200px;
+  resize: vertical;
+  font-family: "Consolas", "D2Coding", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fafbfc;
+}
+
+.ji-error {
+  margin-top: 6px;
+  color: #b91c1c;
+  font-size: 13px;
+}
+
+.ji-actions {
+  margin-top: 12px;
+  text-align: right;
+}
+
+/* ── Content layout ──────────────────────────────────────── */
+.content {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.canvas-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  gap: 1px;
+  background: var(--border);
+}
+
+.pane {
+  position: relative;
+  height: 100%;
+  background: #ffffff;
+}
+
+.pane-title {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── Custom node ─────────────────────────────────────────── */
+.custom-node {
+  min-width: 150px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.cn-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.cn-badge {
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+
+.cn-category {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: inherit;
+  opacity: 0.7;
+}
+
+.cn-title {
+  font-weight: 700;
+}
+
+.cn-changes {
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+/* 포커스 링 (패널 클릭 시 강조) */
+.react-flow__node.focus-ring {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+/* ── Summary panel ───────────────────────────────────────── */
+.summary {
+  width: 340px;
+  border-left: 1px solid var(--border);
+  background: var(--panel);
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.summary h2 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+.summary h3 {
+  font-size: 13px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 18px 0 8px;
+}
+
+.summary-counts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.count {
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.count-num {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.count-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* config changes */
+.cfg-row {
+  border-top: 1px solid var(--border);
+  padding: 8px 0;
+}
+
+.cfg-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cfg-vals {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 13px;
+}
+
+.cfg-before {
+  color: #b91c1c;
+}
+
+.cfg-after {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.cfg-arrow {
+  color: var(--muted);
+}
+
+/* change list */
+.change-item {
+  border-top: 1px solid var(--border);
+}
+
+.change-item.focused {
+  background: #eff6ff;
+}
+
+.ci-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ci-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 10px 4px;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.ci-main:hover .ci-label {
+  text-decoration: underline;
+}
+
+.ci-badge {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 9px;
+  flex-shrink: 0;
+}
+
+.ci-label {
+  font-size: 14px;
+}
+
+.ci-toggle {
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.ci-fields {
+  padding: 4px 4px 12px;
+}
+
+.field-change {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: #fafbfc;
+}
+
+.fc-name {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.fc-side {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.fc-tag {
+  flex-shrink: 0;
+  width: 32px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.fc-before .fc-val {
+  background: #fef2f2;
+  color: #7f1d1d;
+}
+
+.fc-after .fc-val {
+  background: #f0fdf4;
+  color: #14532d;
+}
+
+.fc-val {
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+
+/* 단어 단위 inline diff */
+.fc-inline {
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+
+.fc-inline .w-add {
+  background: #dcfce7;
+  color: #14532d;
+  border-radius: 3px;
+}
+
+.fc-inline .w-del {
+  background: #fee2e2;
+  color: #7f1d1d;
+  text-decoration: line-through;
+  border-radius: 3px;
+}
+
+/* 엣지 변경 리스트 */
+.edge-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--border);
+  background: none;
+  padding: 10px 4px;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.edge-item:hover .edge-route {
+  text-decoration: underline;
+}
+
+.edge-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.edge-route {
+  font-size: 13px;
+}
+
+.edge-change {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.edge-change s {
+  color: #b91c1c;
+}
+
+.edge-change b {
+  color: #15803d;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
