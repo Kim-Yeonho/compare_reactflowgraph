@@ -1,0 +1,325 @@
+{
+  "name": "graph_28d70600",
+  "role": "hgs-test",
+  "description": "HGS_TEST_AGENT",
+  "config": {
+    "options": [
+      {
+        "name": "number_of_messages",
+        "type": "INT",
+        "description": "대화에서 기억할 메시지의 개수 (AI 메시지 포함)",
+        "placeholder": null,
+        "required": true,
+        "is_shown": true,
+        "display_name": "메시지 히스토리 길이",
+        "value": 20
+      }
+    ],
+    "version": "v2"
+  },
+  "nodes": [
+    {
+      "id": "efe5c586-9ba8-466b-bf0f-dfbe58722220",
+      "metadata": {
+        "outputs": [
+          { "name": "message", "display_name": "User Message", "output_types": ["MESSAGE"], "multiple_outputs": true }
+        ],
+        "fields": [],
+        "name": "ChatInput",
+        "display_name": "Chat Input",
+        "description": "채팅 입력 컴포넌트",
+        "category": "INPUT",
+        "can_be_tool": false
+      },
+      "canvas": { "x": -300, "y": 90, "width": 285, "height": 80 }
+    },
+    {
+      "id": "c3c53402-0af1-4d7b-809e-244c234c5f5f",
+      "metadata": {
+        "outputs": [
+          { "name": "response", "display_name": "Response", "output_types": ["MESSAGE", "AI_MESSAGE"], "multiple_outputs": true }
+        ],
+        "fields": [
+          {
+            "name": "input",
+            "type": "TEXT",
+            "description": "",
+            "placeholder": "",
+            "required": true,
+            "is_shown": true,
+            "display_name": "Input",
+            "refresh_button": false,
+            "input_types": ["MESSAGE"],
+            "multiple_inputs": false,
+            "value": null,
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": null,
+            "multiline": true,
+            "regex": null,
+            "editable": true
+          },
+          {
+            "name": "tools",
+            "type": "TOOL",
+            "description": "에이전트가 사용할 도구들",
+            "placeholder": null,
+            "required": false,
+            "is_shown": true,
+            "display_name": "Tools",
+            "refresh_button": false,
+            "input_types": ["TOOL"],
+            "multiple_inputs": true,
+            "value": null,
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": null
+          },
+          {
+            "name": "system_prompt_template",
+            "type": "PROMPT",
+            "description": "에이전트의 시스템 프롬프트 템플릿",
+            "placeholder": null,
+            "required": false,
+            "is_shown": true,
+            "display_name": "System Prompt Template",
+            "refresh_button": false,
+            "input_types": [],
+            "multiple_inputs": false,
+            "value": "너는 사내 지식 저장소를 조회해 답변하는 에이전트다.\n사용자 질문에 대해 아래 참고 문서를 우선 근거로 답변하라.\n문서에 없는 내용은 모른다고 답하고 추측하지 마라.\n",
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": ["system_prompt_template"],
+            "multiline": true,
+            "use_prompt_gallery": true
+          },
+          {
+            "name": "jailbreak_check",
+            "type": "BOOLEAN",
+            "description": "입력 내용 안전성 검사 체크할지 여부",
+            "placeholder": null,
+            "required": false,
+            "is_shown": true,
+            "display_name": "Jailbreak Check",
+            "refresh_button": false,
+            "input_types": [],
+            "multiple_inputs": false,
+            "value": false,
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": null
+          },
+          {
+            "name": "model",
+            "type": "DROPDOWN",
+            "description": "언어 모델 제공자",
+            "placeholder": "모델을 선택하세요",
+            "required": true,
+            "is_shown": true,
+            "display_name": "Model",
+            "refresh_button": true,
+            "input_types": [],
+            "multiple_inputs": false,
+            "value": "azure_openai:gpt-5.4",
+            "should_update": true,
+            "should_copy_value": true,
+            "root_group_field_names": ["model"],
+            "options": ["azure_openai:gpt-5.4", "azure_openai:gpt-5.4-mini"],
+            "searchable": false
+          }
+        ],
+        "name": "Agent",
+        "display_name": "Agent",
+        "description": "요청을 주어진 도구를 사용하여 처리하는 에이전트",
+        "category": "AGENT",
+        "can_be_tool": false
+      },
+      "canvas": { "x": 945, "y": 0, "width": 285, "height": 568 }
+    },
+    {
+      "id": "e645f7c3-24c5-442e-b7ba-6f00e3409331",
+      "metadata": {
+        "outputs": [],
+        "fields": [
+          {
+            "name": "input",
+            "type": "MESSAGE",
+            "description": "입력",
+            "placeholder": null,
+            "required": true,
+            "is_shown": true,
+            "display_name": "Input",
+            "refresh_button": false,
+            "input_types": ["AI_MESSAGE"],
+            "multiple_inputs": true,
+            "value": null,
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": null
+          }
+        ],
+        "name": "ChatOutput",
+        "display_name": "Chat Output",
+        "description": "AI 출력 컴포넌트",
+        "category": "OUTPUT",
+        "can_be_tool": false
+      },
+      "canvas": { "x": 1470, "y": 180, "width": 285, "height": 83 }
+    },
+    {
+      "id": "ef18b85a-e0ab-45c5-988b-d1c6eba46fc1",
+      "metadata": {
+        "outputs": [
+          { "name": "tool", "display_name": "Tool", "output_types": ["TOOL"], "multiple_outputs": true }
+        ],
+        "fields": [
+          {
+            "name": "tool_list",
+            "type": "OBJECT",
+            "description": null,
+            "placeholder": null,
+            "required": true,
+            "is_shown": true,
+            "display_name": "Tool List",
+            "refresh_button": false,
+            "input_types": [],
+            "multiple_inputs": false,
+            "value": [
+              { "tool_name": "_web_search", "tool_description": "Perform a web search", "is_enabled": true }
+            ],
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": null,
+            "modifiable_row": false
+          }
+        ],
+        "name": "WebSearchTool",
+        "display_name": "Web Search Tool",
+        "description": "웹 검색 도구",
+        "category": "TOOL",
+        "can_be_tool": false
+      },
+      "canvas": { "x": 315, "y": 165, "width": 285, "height": 155 }
+    },
+    {
+      "id": "d05684a3-6ac0-492b-a760-18023b76b703",
+      "metadata": {
+        "outputs": [
+          { "name": "response", "display_name": "Response", "output_types": ["MESSAGE", "AI_MESSAGE"], "multiple_outputs": true }
+        ],
+        "fields": [
+          {
+            "name": "input",
+            "type": "TEXT",
+            "description": null,
+            "placeholder": null,
+            "required": true,
+            "is_shown": true,
+            "display_name": "Input",
+            "refresh_button": false,
+            "input_types": ["MESSAGE", "STRING"],
+            "multiple_inputs": false,
+            "value": null,
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": null,
+            "multiline": true,
+            "regex": null,
+            "editable": true
+          },
+          {
+            "name": "prompt",
+            "type": "PROMPT",
+            "description": "모델의 시스템 프롬프트 템플릿",
+            "placeholder": "",
+            "required": false,
+            "is_shown": true,
+            "display_name": "System Prompt Template",
+            "refresh_button": false,
+            "input_types": [],
+            "multiple_inputs": false,
+            "value": null,
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": ["prompt"],
+            "multiline": true,
+            "use_prompt_gallery": true
+          },
+          {
+            "name": "model",
+            "type": "DROPDOWN",
+            "description": "언어 모델 제공자",
+            "placeholder": "모델을 선택하세요",
+            "required": true,
+            "is_shown": true,
+            "display_name": "Model",
+            "refresh_button": true,
+            "input_types": [],
+            "multiple_inputs": false,
+            "value": "azure_openai:gpt-5.4",
+            "should_update": true,
+            "should_copy_value": true,
+            "root_group_field_names": ["model"],
+            "options": ["azure_openai:gpt-5.4", "azure_openai:gpt-5.4-mini"],
+            "searchable": false
+          },
+          {
+            "name": "temperature",
+            "type": "SLIDER",
+            "description": "Temperature for the language model",
+            "placeholder": null,
+            "required": false,
+            "is_shown": false,
+            "display_name": "Temperature",
+            "refresh_button": false,
+            "input_types": [],
+            "multiple_inputs": false,
+            "value": 0.5,
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": ["model"]
+          },
+          {
+            "name": "max_tokens",
+            "type": "INT",
+            "description": "Maximum number of tokens to generate in the response",
+            "placeholder": null,
+            "required": false,
+            "is_shown": false,
+            "display_name": "Max Tokens",
+            "refresh_button": false,
+            "input_types": [],
+            "multiple_inputs": false,
+            "value": null,
+            "should_update": false,
+            "should_copy_value": true,
+            "root_group_field_names": ["model"],
+            "is_positive": false
+          }
+        ],
+        "name": "LanguageModel",
+        "display_name": "Language Model",
+        "description": "LLM을 사용하여 입력 메시지에 대한 응답을 생성합니다.",
+        "category": "MODEL",
+        "can_be_tool": false
+      },
+      "canvas": { "x": 945, "y": 720, "width": 285, "height": 346 }
+    }
+  ],
+  "edges": [
+    { "source": "efe5c586-9ba8-466b-bf0f-dfbe58722220", "source_output_name": "message", "target": "c3c53402-0af1-4d7b-809e-244c234c5f5f", "target_field_name": "input" },
+    { "source": "c3c53402-0af1-4d7b-809e-244c234c5f5f", "source_output_name": "response", "target": "e645f7c3-24c5-442e-b7ba-6f00e3409331", "target_field_name": "input" },
+    { "source": "ef18b85a-e0ab-45c5-988b-d1c6eba46fc1", "source_output_name": "tool", "target": "c3c53402-0af1-4d7b-809e-244c234c5f5f", "target_field_name": "tools" },
+    { "source": "d05684a3-6ac0-492b-a760-18023b76b703", "source_output_name": "response", "target": "e645f7c3-24c5-442e-b7ba-6f00e3409331", "target_field_name": "input" },
+    { "source": "efe5c586-9ba8-466b-bf0f-dfbe58722220", "source_output_name": "message", "target": "d05684a3-6ac0-492b-a760-18023b76b703", "target_field_name": "input" }
+  ],
+  "notes": [],
+  "display_name": "HGS_TEST_AGENT",
+  "is_favorite": false,
+  "has_schedule": false,
+  "status": "ACTIVE",
+  "ownership": "MY",
+  "validation_status": "VALID",
+  "validation_errors": [],
+  "tags": []
+}
