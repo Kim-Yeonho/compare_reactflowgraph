@@ -8,6 +8,7 @@ import OverlayView from "./components/OverlayView";
 import SplitView from "./components/SplitView";
 import SummaryPanel from "./components/SummaryPanel";
 import JsonInputs from "./components/JsonInputs";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 // 초기값: 샘플 그래프를 양쪽 입력창에 넣고 즉시 비교 결과를 보여준다.
 const initialDeployed = JSON.stringify(deployedGraph, null, 2);
@@ -72,11 +73,13 @@ export default function App() {
 
       <div className="content">
         <main className="canvas-area">
-          {mode === "overlay" ? (
-            <OverlayView diff={diff} focus={focus} onSelectNode={selectNode} />
-          ) : (
-            <SplitView diff={diff} focus={focus} onSelectNode={selectNode} />
-          )}
+          <ErrorBoundary key={mode}>
+            {mode === "overlay" ? (
+              <OverlayView diff={diff} focus={focus} onSelectNode={selectNode} />
+            ) : (
+              <SplitView diff={diff} focus={focus} onSelectNode={selectNode} />
+            )}
+          </ErrorBoundary>
         </main>
         <SummaryPanel diff={diff} focus={focus} onSelectNode={selectNode} />
       </div>

@@ -496,3 +496,37 @@ button.primary {
   color: var(--muted);
   font-size: 13px;
 }
+
+/* 렌더 오류 fallback 화면 */
+.error-screen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.error-screen pre {
+  max-width: 90%;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #fef2f2;
+  color: #7f1d1d;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+}
+
+.error-screen button {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  padding: 9px 22px;
+  cursor: pointer;
+  font: inherit;
+}

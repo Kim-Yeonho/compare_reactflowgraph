@@ -17,11 +17,22 @@ function pushSeg(out, type, text) {
   else out.push({ type, text });
 }
 
+// LCS DP는 O(m·n) 메모리라 토큰이 매우 많으면 탭이 OOM으로 죽을 수 있다.
+// 이 한도를 넘으면 정밀 비교 대신 "전체 삭제 + 전체 추가"로 안전하게 폴백한다.
+const MAX_CELLS = 1_500_000;
+
 export function wordDiff(before, after) {
   const a = tokenize(before);
   const b = tokenize(after);
   const m = a.length;
   const n = b.length;
+
+  if (m * n > MAX_CELLS) {
+    const out = [];
+    if (before) pushSeg(out, "removed", String(before));
+    if (after) pushSeg(out, "added", String(after));
+    return out;
+  }
 
   // LCS 길이 DP (뒤에서부터)
   const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));

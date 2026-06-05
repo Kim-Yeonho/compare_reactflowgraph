@@ -5,8 +5,12 @@ import { toSideFlow } from "../lib/transformGraph";
 
 /**
  * 좌우 분할 모드. 좌측=배포(removed 강조), 우측=캔버스(added 강조).
- * 두 패널의 뷰포트(zoom/pan)를 동기화한다 — 한쪽 onMove를 받아 다른 쪽
- * setViewport로 반영하며, 동일 뷰포트는 dedupe하여 무한 루프를 막는다.
+ * 두 패널의 뷰포트(zoom/pan)를 동기화한다.
+ *
+ * 무한 루프 방지: React Flow의 onMove는 사용자 제스처일 때만 event가 채워지고
+ * 프로그램적 이동(fitView·상대 패널 setViewport)일 때는 event가 null이다.
+ * 따라서 "사용자가 직접 움직인 경우(event 존재)"에만 반대편에 반영하면,
+ * 동기화로 발생한 이동이 다시 동기화를 부르는 핑퐁이 원천 차단된다.
  */
 export default function SplitView({ diff, focus, onSelectNode }) {
   const before = useMemo(() => toSideFlow(diff, "before"), [diff]);
@@ -14,13 +18,9 @@ export default function SplitView({ diff, focus, onSelectNode }) {
 
   const leftApi = useRef(null);
   const rightApi = useRef(null);
-  const lastSync = useRef("");
 
-  const handleMove = (sourceSide) => (_evt, viewport) => {
-    if (!viewport) return;
-    const key = `${viewport.x.toFixed(2)}|${viewport.y.toFixed(2)}|${viewport.zoom.toFixed(3)}`;
-    if (lastSync.current === key) return; // 같은 뷰포트 재반영 차단
-    lastSync.current = key;
+  const handleMove = (sourceSide) => (event, viewport) => {
+    if (!event || !viewport) return; // 프로그램적 이동은 무시 → 루프 차단
     const target = sourceSide === "left" ? rightApi.current : leftApi.current;
     if (target) target.setViewport(viewport);
   };
